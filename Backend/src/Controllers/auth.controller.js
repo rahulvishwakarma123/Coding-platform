@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../Models/User.model');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../Models/User.model.js';
 
 // Hash password helper (12 salt rounds provides excellent security) [citation:7]
 const hashPassword = async (password) => {
@@ -36,7 +36,7 @@ const getCookieOptions = () => ({
 // @desc    Register a new user
 // @route   POST /api/auth/register
 // @access  Public
-const register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -88,7 +88,7 @@ const register = async (req, res) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -137,7 +137,7 @@ const login = async (req, res) => {
 // @desc    Refresh access token
 // @route   POST /api/auth/refresh
 // @access  Public (requires refresh token in cookie)
-const refreshToken = async (req, res) => {
+export const refreshToken = async (req, res) => {
   try {
     // Get refresh token from httpOnly cookie
     const refreshToken = req.cookies.refreshToken;
@@ -200,7 +200,7 @@ const refreshToken = async (req, res) => {
 // @desc    Logout user
 // @route   POST /api/auth/logout
 // @access  Private
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
   try {
     // Clear the refresh token cookie
     res.clearCookie('refreshToken', {
@@ -226,7 +226,7 @@ const logout = async (req, res) => {
 // @desc    Get current user profile
 // @route   GET /api/auth/me
 // @access  Private
-const getMe = async (req, res) => {
+export const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     
@@ -249,12 +249,4 @@ const getMe = async (req, res) => {
       message: 'Server error' 
     });
   }
-};
-
-module.exports = {
-  register,
-  login,
-  refreshToken,
-  logout,
-  getMe
 };

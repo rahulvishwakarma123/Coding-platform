@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import User from '../Models/User.model';
+import User from '../Models/User.model.js';
 
 // Middleware to protect routes that require authentication [citation:3]
-const protect = async (req, res, next) => {
+export const protect = async (req, res, next) => {
   try {
     let token;
 
@@ -59,25 +59,24 @@ const protect = async (req, res, next) => {
 };
 
 // Optional: Role-based authorization middleware
-const authorize = (...roles) => {
-  return (req, res, next) => {
-    if (!req.user) {
-      return res.status(401).json({ 
-        success: false, 
-        message: 'Not authorized' 
-      });
-    }
+// const authorize = (...roles) => {
+//   return (req, res, next) => {
+//     if (!req.user) {
+//       return res.status(401).json({ 
+//         success: false, 
+//         message: 'Not authorized' 
+//       });
+//     }
     
-    // Add role field to User schema if needed
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ 
-        success: false, 
-        message: 'Forbidden. You do not have permission.' 
-      });
-    }
+//     // Add role field to User schema if needed
+//     if (!roles.includes(req.user.role)) {
+//       return res.status(403).json({ 
+//         success: false, 
+//         message: 'Forbidden. You do not have permission.' 
+//       });
+//     }
     
-    next();
-  };
-};
+//     next();
+//   };
+// };
 
-module.exports = { protect, authorize };

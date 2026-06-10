@@ -69,4 +69,4 @@ userSchema.statics.findByRatingRange = function(min, max) {
   return this.find({ rating: { $gte: min, $lte: max } }).sort({ rating: -1 });
 };
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);
