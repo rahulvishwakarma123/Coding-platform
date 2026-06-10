@@ -1,73 +1,80 @@
-// models/User.js
+// models/Problem.js
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
-  name: {
+const problemSchema = new mongoose.Schema({
+  title: {
     type: String,
-    required: [true, 'Please provide a name'],
-    trim: true,
-    maxlength: [50, 'Name cannot exceed 50 characters']
-  },
-  email: {
-    type: String,
-    required: [true, 'Please provide an email'],
+    required: [true, 'Problem title is required'],
     unique: true,
-    lowercase: true,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please provide a valid email'
-    ]
+    trim: true
   },
-  password: {
+  difficulty: {
     type: String,
-    required: [true, 'Please provide a password'],
-    minlength: 6,
-    select: false // Don't return password by default in queries
+    enum: ['Easy', 'Medium', 'Hard'],
+    required: true,
+    default: 'Medium'
   },
-  rating: {
-    type: Number,
-    default: 1200, // Starting ELO rating for coders
-    min: 0,
-    max: 3000
+  tags: [{
+    type: String,
+    enum: ['Arrays', 'Strings', 'Hash Tables', 'Dynamic Programming', 
+           'Math', 'Sorting', 'Greedy', 'Recursion', 'Trees', 'Graphs']
+  }],
+  description: {
+    type: String,
+    required: true
   },
-  solvedProblems: [{
-    problemId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Problem'
+  testCases: [{
+    input: {
+      type: String,
+      required: true
     },
-    submittedAt: {
-      type: Date,
-      default: Date.now
+    output: {
+      type: String,
+      required: true
+    },
+    isHidden: {
+      type: Boolean,
+      default: false // Hidden test cases for final judging
     }
   }],
-  contestHistory: [{
-    contestId: String,
-    rank: Number,
-    score: Number,
-    date: {
-      type: Date,
-      default: Date.now
-    }
-  }],
+  starterCode: {
+    javascript: String,
+    python: String,
+    java: String,
+    cpp: String
+  },
+  solution: {
+    type: String,
+    select: false // Don't expose solution in normal queries
+  },
+  acceptanceRate: {
+    type: Number,
+    default: 0,
+    min: 0,
+    max: 100
+  },
+  totalSubmissions: {
+    type: Number,
+    default: 0
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
 
-// Add helpful instance methods
-userSchema.methods.getProfile = function() {
-  return {
-    name: this.name,
-    email: this.email,
-    rating: this.rating,
-    problemsSolved: this.solvedProblems.length
-  };
+// Add index for better query performance
+problemSchema.index({ difficulty: 1, tags: 1 });
+
+// Static method to get problems by difficulty
+problemSchema.statics.getByDifficulty = function(difficulty) {
+  return this.find({ difficulty }).sort({ createdAt: -1 });
 };
 
-// Static method to find users by rating range
-userSchema.statics.findByRatingRange = function(min, max) {
-  return this.find({ rating: { $gte: min, $lte: max } }).sort({ rating: -1 });
+// Instance method to check if submission passes basic tests
+problemSchema.methods.runBasicTests = function(userOutput, testCaseIndex) {
+  const testCase = this.testCases[testCaseIndex];
+  return userOutput.toString() === testCase.output.toString();
 };
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('Problem', problemSchema);
