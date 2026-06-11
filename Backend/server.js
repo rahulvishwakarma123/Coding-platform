@@ -7,6 +7,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import authRoutes from './src/Routes/auth.routes.js';
 import {protect} from './src/Middlewares/auth.middleware.js';
+import {notFound, errorHandler} from './src/Middlewares/errorHandler.middleware.js';
+import problemRoutes from './src/Routes/problem.routes.js';
 const app = express();
 dotenv.config();
  
@@ -28,6 +30,7 @@ connectDB();
 
 // // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/problems', problemRoutes);
 
 // // Test protected route example
 app.get('/api/protected', protect, (req, res) => {
@@ -37,6 +40,11 @@ app.get('/api/protected', protect, (req, res) => {
     user: req.user 
   });
 });
+
+
+// Error handling (ALWAYS at the end)
+app.use(notFound);
+app.use(errorHandler);
 
 
 
