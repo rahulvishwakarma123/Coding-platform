@@ -63,4 +63,12 @@ module.exports = {
     // Allows you to use the 'any' type if you are stuck, but warns you to fix it later.
     '@typescript-eslint/no-explicit-any': 'warn',
   },
+  // for aliases
+  settings: {
+    'import/resolver': {
+      typescript: {
+        project: './tsconfig.json',
+      },
+    },
+  },
 };
