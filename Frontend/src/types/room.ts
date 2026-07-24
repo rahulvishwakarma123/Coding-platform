@@ -1,7 +1,7 @@
 // types/room.ts
-import { BaseEntity, ID } from './common';
-import { User } from './user';
-import { Problem } from './problem';
+import type { BaseEntity, ID } from './common';
+import type { User } from './user';
+import type { Problem } from './problem';
 
 export interface Room extends BaseEntity {
   name: string;
@@ -12,8 +12,8 @@ export interface Room extends BaseEntity {
   problem?: Problem;
   status: RoomStatus;
   settings: RoomSettings;
-  startedAt?: ISO8601;
-  endedAt?: ISO8601;
+  startedAt?: Date;
+  endedAt?: Date;
   recordingUrl?: string;
 }
 
@@ -21,8 +21,8 @@ export interface RoomParticipant {
   userId: ID;
   user: User;
   role: ParticipantRole;
-  joinedAt: ISO8601;
-  leftAt?: ISO8601;
+  joinedAt: Date;
+  leftAt?: Date;
   isActive: boolean;
   connectionStatus: ConnectionStatus;
 }
@@ -63,7 +63,7 @@ export interface ChatMessage {
   userId: ID;
   userName: string;
   content: string;
-  timestamp: ISO8601;
+  timestamp: Date;
   type: 'message' | 'system' | 'notification';
   attachments?: ChatAttachment[];
 }

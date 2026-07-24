@@ -18,8 +18,8 @@ export enum Status {
 
 export interface BaseEntity {
   id: ID;
-  createdAt: ISO8601;
-  updatedAt: ISO8601;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PaginatedResponse<T> {
@@ -33,7 +33,7 @@ export interface PaginatedResponse<T> {
 export interface ApiError {
   code: string;
   message: string;
-  details?: Record<string, any>;
+  details?: Record<string, undefined>; //yaha par maine any hata ke undifined kiya hai 
 }
 
 export interface ApiResponse<T> {

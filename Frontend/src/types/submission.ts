@@ -1,5 +1,5 @@
 // types/submission.ts
-import { BaseEntity, ID } from './common';
+import type { BaseEntity, ID } from './common';
 
 export interface Submission extends BaseEntity {
   userId: ID;
