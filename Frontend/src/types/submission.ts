@@ -21,7 +21,7 @@ export enum Language {
   CPP = 'cpp',
   TYPESCRIPT = 'typescript',
   GO = 'go',
-  RUST = 'rust'
+  RUST = 'rust',
 }
 
 export enum SubmissionStatus {
@@ -32,7 +32,7 @@ export enum SubmissionStatus {
   MEMORY_LIMIT_EXCEEDED = 'memory_limit_exceeded',
   RUNTIME_ERROR = 'runtime_error',
   COMPILATION_ERROR = 'compilation_error',
-  QUEUED = 'queued'
+  QUEUED = 'queued',
 }
 
 export interface TestResult {

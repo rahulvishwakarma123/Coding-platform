@@ -1,5 +1,6 @@
 // types/editor.ts
 import { Language } from './submission';
+import type { ID } from './common';
 
 export interface EditorState {
   code: string;
@@ -9,7 +10,7 @@ export interface EditorState {
   cursorPosition: CursorPosition;
   selectedText: string;
   isDirty: boolean;
-  lastSaved: ISO8601 | null;
+  lastSaved: Date | null;
   tabs: EditorTab[];
   activeTabId: ID;
 }
@@ -17,7 +18,7 @@ export interface EditorState {
 export enum EditorTheme {
   VS_DARK = 'vs-dark',
   VS_LIGHT = 'vs-light',
-  HC_BLACK = 'hc-black'
+  HC_BLACK = 'hc-black',
 }
 
 export interface CursorPosition {

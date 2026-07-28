@@ -1,14 +1,14 @@
 // types/contest.ts
-import { BaseEntity, ID } from './common';
-import { Problem } from './problem';
-import { User } from './user';
+import type { BaseEntity, ID } from './common';
+import type { Problem } from './problem';
+import type { User } from './user';
 
 export interface Contest extends BaseEntity {
   title: string;
   description: string;
   problems: ContestProblem[];
-  startTime: ISO8601;
-  endTime: ISO8601;
+  startTime: Date;
+  endTime: Date;
   duration: number;
   status: ContestStatus;
   participants: ContestParticipant[];
@@ -33,7 +33,7 @@ export interface ContestParticipant {
   score: number;
   penalties: number;
   submissions: ContestSubmission[];
-  joinedAt: ISO8601;
+  joinedAt: Date;
   rank?: number;
 }
 
@@ -42,7 +42,7 @@ export interface ContestSubmission {
   submissionId: ID;
   status: string;
   points: number;
-  time: ISO8601;
+  time: Date;
   attempts: number;
 }
 
@@ -64,7 +64,7 @@ export enum ContestStatus {
   UPCOMING = 'upcoming',
   ONGOING = 'ongoing',
   COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  CANCELLED = 'cancelled',
 }
 
 export interface ContestState {

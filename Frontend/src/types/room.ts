@@ -31,19 +31,19 @@ export enum ParticipantRole {
   HOST = 'host',
   INTERVIEWER = 'interviewer',
   CANDIDATE = 'candidate',
-  OBSERVER = 'observer'
+  OBSERVER = 'observer',
 }
 
 export enum RoomStatus {
   WAITING = 'waiting',
   ACTIVE = 'active',
-  ENDED = 'ended'
+  ENDED = 'ended',
 }
 
 export enum ConnectionStatus {
   CONNECTED = 'connected',
   DISCONNECTED = 'disconnected',
-  RECONNECTING = 'reconnecting'
+  RECONNECTING = 'reconnecting',
 }
 
 export interface RoomSettings {

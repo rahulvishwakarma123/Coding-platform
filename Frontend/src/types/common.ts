@@ -6,14 +6,14 @@ export type ISO8601 = string;
 export enum Difficulty {
   EASY = 'easy',
   MEDIUM = 'medium',
-  HARD = 'hard'
+  HARD = 'hard',
 }
 
 export enum Status {
   IDLE = 'idle',
   LOADING = 'loading',
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
 }
 
 export interface BaseEntity {
@@ -33,7 +33,7 @@ export interface PaginatedResponse<T> {
 export interface ApiError {
   code: string;
   message: string;
-  details?: Record<string, undefined>; //yaha par maine any hata ke undifined kiya hai 
+  details?: Record<string, undefined>; //yaha par maine any hata ke undifined kiya hai
 }
 
 export interface ApiResponse<T> {
